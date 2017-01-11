@@ -1,3 +1,5 @@
+import random
+RESTAURANTE = ['Sonoba', 'Soy Bistro', "Panera", "City Grill"]
 class Department:
 	"""Parent class for all department
 	Method: __init__, get_name, get_supervisor, meet
@@ -30,7 +32,28 @@ class Department:
 		self.name
 
 
+class Employee:
 
+	def __init__(self, first_name, last_name):
+		self.first_name = first_name
+		self.last_name = last_name
+		self.restaurante = []
+		
+	def eat(self, food, companion):
+		self.food = food
+		self.companion = ['Sam', 'Dean', 'Alice']
+		i = random.randint(0, 3)
+
+		print("{} {} is at the {} and ate {} with {}".format(self.first_name, self.last_name, self.restaurante[i], self.food, self.companion))
+		
+
+
+	def add_restaurant(self, restaurante):
+		self.restaurante.append(restaurante)
+		
+	def __repr__(self):
+		self.first_name
+		self.last_name
 
 class Development(Department):
 	"""softeware develpment department
@@ -178,6 +201,20 @@ development = Development("Development", "Julia Kim_Chung", 8)
 print(development.name)
 development.meet()
 print(development.meet())
+
+employee = Employee("Sarah", "Smith")
+print(employee.first_name)
+print(employee.last_name)
+employee.add_restaurant("Sonobana")
+employee.add_restaurant("Soy Bistro")
+employee.add_restaurant("Panera")
+employee.add_restaurant("City Grill")
+companions = ['Suzi', 'Robin', 'Park']
+companions = ",". join(companions)
+print(companions)
+employee.eat("food", "companions" )
+# print(employee.eat("pizza", "companions" ))
+
 
 
 
