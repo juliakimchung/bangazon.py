@@ -45,7 +45,7 @@ class Employee:
 		i = random.randint(0, 3)
 		for elm in self.companion:
 			print (elm)
-		print("{} {} is at the {} and ate {} with {} {} {}".format(self.first_name, self.last_name, self.restaurante[i], self.food, self.companion[0], self.companion[1], self.companion[2]))
+		print("{} {} is at the {} and ate {} with {}, {}, and {}".format(self.first_name, self.last_name, self.restaurante[i], self.food, self.companion[0], self.companion[1], self.companion[2]))
 		
 
 
@@ -214,7 +214,7 @@ companions = ['Suzi', 'Robin', 'Park']
 companions = ",". join(companions)
 print(companions)
 employee.eat("food", "companions" )
-# print(employee.eat("pizza", "companions" ))
+print(employee.eat("pizza", "companions" ))
 
 
 
