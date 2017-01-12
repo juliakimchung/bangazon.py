@@ -1,18 +1,28 @@
 import random
+
 RESTAURANTE = ['Sonoba', 'Soy Bistro', "Panera", "City Grill"]
+
 class Department:
 	"""Parent class for all department
 	Method: __init__, get_name, get_supervisor, meet
 	"""
 
-	def __init__(self, name, supervisor, employee_count):
+	def __init__(self, name, supervisor, employee_count, employee):
 		self.name = name
 		self.supervisor = supervisor
 		self.size = employee_count
 		self.budget = 500
+		self.employees = set()
 
 	
+	def add_employee(self, employee):
+		self.employees.add(employee)
 
+	def remove_employee(self, employee):
+		self.employees.discard(employee)
+
+	def get_employees(self):
+		return self.employees
 
 	def get_name(self):
 		"""Returns the name of the department"""
@@ -41,26 +51,37 @@ class Employee:
 		
 	def eat(self, food, companion):
 		self.food = food
-		self.companion = ['Sam', 'Dean', 'Alice']
+		self.companion = ["Sam", "Dean", "Alice"]
 		i = random.randint(0, 3)
 
 		print("{} {} is at the {} and ate {} with {}".format(self.first_name, self.last_name, self.restaurante[i], self.food, self.companion))
 		
 
 
-	def add_restaurant(self, restaurante):
-		self.restaurante.append(restaurante)
+	
 		
 	def __repr__(self):
 		self.first_name
 		self.last_name
 
+class FullTime():
+	"""Describes full time employees"""
+	def __init__(self):
+		self.hours_per_week = 40
+
+class PartTime():
+	"""Describes part-time employees"""
+
+	def __init__(self):
+		self.hours_per_week = 24
+
+
 class Development(Department):
 	"""softeware develpment department
 	Methods: __init__, get_name, get_supervisor, meet
 	"""
-	def __init__(self, name, supervisor, employee_count):
-		super().__init__(name, supervisor, employee_count)
+	def __init__(self, name, supervisor, employee_count, employee):
+		super().__init__(name, supervisor, employee_count, employee)
 		super().meet()
 
 	def meet(self):
@@ -69,13 +90,15 @@ class Development(Department):
 
 
 
-class HumanResources(Department):
+class HumanResources(Department, Employee, FullTime):
 	"""Class for representing Human Resource department
 	Methods: __init__, add_policy, get_policy, etc.
 	"""
-	def __init__(self, name, supervisor, employee_count):
-		super().__init__(name, supervisor, employee_count)
-		super().get_budget()
+	def __init__(self, name, supervisor, employee_count, first_name, last_name, employee):
+		Department.__init__(self,name, supervisor, employee_count, employee)
+		Employee.__init__(self,first_name, last_name)
+		FullTime.__init__(self)
+		
 		self.policies = set()
 		
 		
@@ -106,8 +129,8 @@ class FrontOffice(Department):
 	Methods: __init__, add_policy, get_policy, get_am_agent, get_pm_agent
 	"""
 
-	def __init__(self, name, supervisor, employee_count):
-		super().__init__( name, supervisor, employee_count)
+	def __init__(self, name, supervisor, employee_count, employee):
+		super().__init__( name, supervisor, employee_count, employee)
 		super().get_budget()
 		self.policies = set()
 		self.am_agent  = set()
@@ -126,8 +149,8 @@ class FrontOffice(Department):
 
 class EventServices(Department):
 
-	def __init__(self, name, supervisor, employee_count):
-		super().__init__(name, supervisor, employee_count)
+	def __init__(self, name, supervisor, employee_count, employee):
+		super().__init__(name, supervisor, employee_count, employee)
 		super().get_budget()
 		self.admin_staff = set()
 		self.event_sales_managers = set()
@@ -144,8 +167,8 @@ class EventServices(Department):
 
 
 class CityGrill(Department):
-	def __init__(self, name, supervisor,employee_count):
-		super().__init__(name, supervisor, employee_count)
+	def __init__(self, name, supervisor,employee_count, employee):
+		super().__init__(name, supervisor, employee_count, employee)
 		super().get_budget()
 		self.buser_staff = set()
 		self.server_staff = set()
@@ -157,14 +180,21 @@ class CityGrill(Department):
 		self.budget = self.budget +500
 
 
-hr_department = HumanResources("HumanResources", "Millie Bisono", 5 )
+hr_department = HumanResources("HumanResources", "Millie Bisono", 5, "Anthony", "Taylor", "employee")
 print(hr_department.name)
+
+print( "Hours", hr_department.hours_per_week)
 print(hr_department.supervisor)
 print(hr_department.size)
 hr_department.get_budget()
 print(hr_department.meet())
-
-
+hr_department.add_employee("Joy Kimberly")
+hr_department.add_employee("Kim Brown")
+hr_department.add_employee("Hilery Clark")
+print("Department: {}".format(hr_department.name) )
+name = [name for name in hr_department.employees]
+for elm in name:
+	print(elm)
 print(hr_department.budget)
 # print(dir(hr_department))
 hr_department.get_supervisor()
@@ -175,7 +205,7 @@ print(hr_department.policies)
 
 
 
-front_office = FrontOffice("Front Office", "Alex Sorogano", 45)
+front_office = FrontOffice("Front Office", "Alex Sorogano", 45, "employee")
 print(front_office.name)
 front_office.add_am_agent("Halely Baley")
 front_office.add_pm_agent("Kevin Baker")
@@ -185,35 +215,44 @@ front_office.get_budget()
 print(front_office.budget)
 
 
-event_dept = EventServices("Event Services", "Joe Charlie", 12)
+event_dept = EventServices("Event Services", "Joe Charlie", 12, "employee")
 event_dept.add_admin_staff("Holly Polly", "Secretary", "Tom Hanks")
 print(event_dept.admin_staff)
 event_dept.get_budget()
 print(event_dept.budget)
 
-city_grill = CityGrill("City Grill", "Brett Williams", 80)
+city_grill = CityGrill("City Grill", "Brett Williams", 80, "employee")
 city_grill.buser_staff.add(("Bob Dylan", "pm"))
 city_grill.get_budget()
 print(city_grill.budget)
 print(city_grill.buser_staff)
 
-development = Development("Development", "Julia Kim_Chung", 8)
+development = Development("Development", "Julia Kim_Chung", 8, "employee")
 print(development.name)
 development.meet()
 print(development.meet())
 
+development.add_employee("Madison Princess")
+development.add_employee("Mitchelle Pring")
+development.add_employee("Madeline Fcess")
+development.add_employee("Dara Song")
+development.remove_employee("Dara Song")
+print("Department: {}".format(development.name))
+names = [name for name in development.employees]
+for name in names:
+	print(name)
+
+development.get_employees()
+print(development.employees)
 employee = Employee("Sarah", "Smith")
 print(employee.first_name)
 print(employee.last_name)
-employee.add_restaurant("Sonobana")
-employee.add_restaurant("Soy Bistro")
-employee.add_restaurant("Panera")
-employee.add_restaurant("City Grill")
-companions = ['Suzi', 'Robin', 'Park']
-companions = ",". join(companions)
-print(companions)
-employee.eat("food", "companions" )
-# print(employee.eat("pizza", "companions" ))
+
+# companions = ['Suzi', 'Robin', 'Park']
+# companions = ",". join(companions)
+# print(companions)
+# employee.eat("food", "companion")
+# print(employee.eat("pizza", "companion" ))
 
 
 
