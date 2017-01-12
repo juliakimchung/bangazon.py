@@ -43,8 +43,9 @@ class Employee:
 		self.food = food
 		self.companion = ['Sam', 'Dean', 'Alice']
 		i = random.randint(0, 3)
-
-		print("{} {} is at the {} and ate {} with {}".format(self.first_name, self.last_name, self.restaurante[i], self.food, self.companion))
+		for elm in self.companion:
+			print (elm)
+		print("{} {} is at the {} and ate {} with {} {} {}".format(self.first_name, self.last_name, self.restaurante[i], self.food, self.companion[0], self.companion[1], self.companion[2]))
 		
 
 
